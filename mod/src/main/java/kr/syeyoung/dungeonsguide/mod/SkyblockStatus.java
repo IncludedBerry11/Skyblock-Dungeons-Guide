@@ -103,9 +103,7 @@ public class SkyblockStatus {
         if (mc == null || mc.thePlayer == null) return false;
         String clientBrand = mc.thePlayer.getClientBrand();
         if (clientBrand == null) return false;
-        if (!mc.isSingleplayer() && mc.loadingScreen != null) {
-            return clientBrand.startsWith("Hypixel BungeeCord");
-        }
+        if (!mc.isSingleplayer() && mc.thePlayer.getClientBrand().toLowerCase(Locale.ROOT).contains("fakepixel")) return true;
         return false;
     }
 
@@ -163,5 +161,4 @@ public class SkyblockStatus {
         else
             isOnDungeon=false;
     }
-
 }
