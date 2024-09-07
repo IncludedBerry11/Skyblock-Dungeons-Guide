@@ -69,8 +69,7 @@ public class SkyblockStatus {
     public boolean isOnHypixel() {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc == null || mc.thePlayer == null) return false;
-        if (!mc.isSingleplayer() && mc.thePlayer.getClientBrand() != null) {
-            return mc.thePlayer.getClientBrand().startsWith("Hypixel BungeeCord");
+        if (!mc.isSingleplayer() && mc.thePlayer.getClientBrand().toLowerCase(Locale.ROOT).contains("fakepixel")) return true;
         }
         return false;
     }
