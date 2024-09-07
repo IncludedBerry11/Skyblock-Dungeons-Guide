@@ -24,7 +24,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Download hychat as a dependency
-      run: mkdir jars && wget https://cdn.discordapp.com/attachments/788052445217030154/1282006645194494043/Hychat-1.4-BETA.jar?ex=66ddc93a&is=66dc77ba&hm=e2f45bc09ce29096e9fac0b233b30211f10c921985dd27dae08b985f729ce387& -O jars/Hychat-1.12.1-BETA.jar
+      run: mkdir jars && wget https://www.mediafire.com/file/ofqploft9c8k7bb/Hychat-1.4-BETA.jar/file -O jars/Hychat-1.12.1-BETA.jar
     - name: Build with Gradle
       run: ./gradlew build
     - uses: actions/upload-artifact@v4
