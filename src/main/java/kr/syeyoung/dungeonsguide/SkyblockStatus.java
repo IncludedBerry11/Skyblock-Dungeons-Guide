@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Locale;
 
 public class SkyblockStatus {
     @Getter
@@ -70,7 +71,6 @@ public class SkyblockStatus {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc == null || mc.thePlayer == null) return false;
         if (!mc.isSingleplayer() && mc.thePlayer.getClientBrand().toLowerCase(Locale.ROOT).contains("fakepixel")) return true;
-        }
         return false;
     }
 
@@ -119,4 +119,4 @@ public class SkyblockStatus {
 
         isOnDungeon = foundDungeon;
     }
-}
+    }
