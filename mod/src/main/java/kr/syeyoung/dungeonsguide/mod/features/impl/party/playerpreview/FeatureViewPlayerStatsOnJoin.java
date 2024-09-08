@@ -1,9 +1,6 @@
 package kr.syeyoung.dungeonsguide.mod.features.impl.party.playerpreview;
 
 import com.mojang.authlib.GameProfile;
-import io.github.moulberry.hychat.HyChat;
-import io.github.moulberry.hychat.chat.ChatManager;
-import io.github.moulberry.hychat.gui.GuiChatBox;
 import kr.syeyoung.dungeonsguide.mod.chat.ChatProcessResult;
 import kr.syeyoung.dungeonsguide.mod.chat.ChatProcessor;
 import kr.syeyoung.dungeonsguide.mod.chat.ChatTransmitter;
