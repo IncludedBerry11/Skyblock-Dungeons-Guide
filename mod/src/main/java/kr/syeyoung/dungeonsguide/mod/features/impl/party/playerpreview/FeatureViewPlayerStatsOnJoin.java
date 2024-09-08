@@ -80,6 +80,85 @@ public class FeatureViewPlayerStatsOnJoin extends SimpleFeature {
             if (isEnabled() && txt.contains("§r§ejoined the dungeon group! (§r§b")) {
                 String username = TextUtils.stripColor(txt).split(" ")[3];
                 if (username.equalsIgnoreCase(mc.getSession().getUsername())) {
+/*
+ *     Dungeons Guide - The most intelligent Hypixel Skyblock Dungeons Mod
+ *     Copyright (C) 2021  cyoung06
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published
+ *     by the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package kr.syeyoung.dungeonsguide.mod.features.impl.party.playerpreview;
+
+import com.mojang.authlib.GameProfile;
+import kr.syeyoung.dungeonsguide.mod.chat.ChatProcessResult;
+import kr.syeyoung.dungeonsguide.mod.chat.ChatProcessor;
+import kr.syeyoung.dungeonsguide.mod.chat.ChatTransmitter;
+import kr.syeyoung.dungeonsguide.mod.config.types.TCStringList;
+import kr.syeyoung.dungeonsguide.mod.events.annotations.DGEventHandler;
+import kr.syeyoung.dungeonsguide.mod.features.FeatureParameter;
+import kr.syeyoung.dungeonsguide.mod.features.FeatureRegistry;
+import kr.syeyoung.dungeonsguide.mod.features.SimpleFeature;
+import kr.syeyoung.dungeonsguide.mod.features.impl.party.playerpreview.api.ApiFetcher;
+import kr.syeyoung.dungeonsguide.mod.features.impl.party.playerpreview.datarenders.DataRendererEditor;
+import kr.syeyoung.dungeonsguide.mod.features.impl.party.playerpreview.widget.WidgetProfileViewer;
+import kr.syeyoung.dungeonsguide.mod.guiv2.elements.CompatLayer;
+import kr.syeyoung.dungeonsguide.mod.overlay.AbsPosPositioner;
+import kr.syeyoung.dungeonsguide.mod.overlay.OverlayManager;
+import kr.syeyoung.dungeonsguide.mod.overlay.OverlayType;
+import kr.syeyoung.dungeonsguide.mod.overlay.OverlayWidget;
+import kr.syeyoung.dungeonsguide.mod.party.PartyContext;
+import kr.syeyoung.dungeonsguide.mod.party.PartyManager;
+import kr.syeyoung.dungeonsguide.mod.utils.TextUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.fml.common.Loader;
+import org.jetbrains.annotations.NotNull;
+import org.lwjgl.input.Mouse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+// TODO: do not limit element positioning
+// maybe a cool editor?
+public class FeatureViewPlayerStatsOnJoin extends SimpleFeature {
+
+    static Minecraft mc = Minecraft.getMinecraft();
+
+    public static UUID fromString(String input) {
+        return UUID.fromString(input.replaceFirst("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5"));
+    }
+
+    public FeatureViewPlayerStatsOnJoin() {
+        super("Dungeon Party", "View player stats when join", "view player rendering when joining/someone joins the party", "partykicker.viewstats", true);
+        addParameter("datarenderers", new FeatureParameter<List<String>>("datarenderers", "DataRenderers", "Datarenderssdasd", new ArrayList<>(Arrays.asList(
+                "catalv", "selected_class_lv", "dungeon_catacombs_higheststat", "dungeon_master_catacombs_higheststat", "skill_combat_lv", "skill_foraging_lv", "skill_mining_lv", "fairysouls", "dummy"
+        )), TCStringList.INSTANCE)
+                .setWidgetGenerator(param -> new CompatLayer(new DataRendererEditor(FeatureViewPlayerStatsOnJoin.this))));
+
+
+        ChatProcessor.INSTANCE.subscribe(((txt, messageContext) -> {
+            if (isEnabled() && txt.contains("§r§ejoined the dungeon group! (§r§b")) {
+                String username = TextUtils.stripColor(txt).split(" ")[3];
+                if (username.equalsIgnoreCase(mc.getSession().getUsername())) {
                     PartyManager.INSTANCE.requestPartyList(context -> {
                         if (context == null) {
                             ChatTransmitter.addToQueue(new ChatComponentText("§eDungeons Guide §7:: §cBugged Dungeon Party "));
@@ -165,21 +244,7 @@ public class FeatureViewPlayerStatsOnJoin extends SimpleFeature {
 
     public IChatComponent getHoveredComponent(ScaledResolution scaledResolution) {
         IChatComponent ichatcomponent = null;
-        if (Loader.isModLoaded("hychat")) {
-            try {
-                ChatManager chatManager = HyChat.getInstance().getChatManager();
-                GuiChatBox guiChatBox = chatManager.getFocusedChat();
-
-                int x = guiChatBox.getX(scaledResolution);
-                int y = guiChatBox.getY(scaledResolution);
-                ichatcomponent = guiChatBox.chatArray.getHoveredComponent(guiChatBox.getSelectedTab().getChatLines(), Mouse.getX(), Mouse.getY(), x, y);
-            } catch (Exception t) {
-            }
-        }
-        if (ichatcomponent == null) {
-            ichatcomponent = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
-        }
+        ichatcomponent = Minecraft.getMinecraft().ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
         return ichatcomponent;
     }
-
 }
