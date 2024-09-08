@@ -39,6 +39,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.Locale;
 
 public class SkyblockStatus {
     boolean wasOnHypixel = false;
