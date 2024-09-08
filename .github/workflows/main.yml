@@ -30,3 +30,8 @@ jobs:
         name: Compiled-files
         path: build
     - run: ls */*/*/*/*/*
+    - run: ls */*/*/*/*
+    - run: ls */*/*/*
+    - run: ls */*/*
+    - run: ls */*
+    - run: ls *
