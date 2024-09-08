@@ -30,11 +30,6 @@ public class FailedAuthToken implements AuthToken {
     private String token;
     private JSONObject parsed;
 
-    public PrivacyPolicyRequiredToken(String token) {
-        this.token = token;
-        this.parsed = DgAuthUtil.getJwtPayload(token);
-    }
-
     @Override
     public boolean isUserVerified() {
         return true;
@@ -72,7 +67,7 @@ public class FailedAuthToken implements AuthToken {
 
     @Override
     public String getToken() {
-        return token;
+        return null;
     }
 
     public Throwable getException() {
