@@ -25,7 +25,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - run: ls build/****
     - uses: actions/upload-artifact@v4
       with:
         name: Compiled-files
-        path: build/libs/*.jar
+        path: build/libs/*
