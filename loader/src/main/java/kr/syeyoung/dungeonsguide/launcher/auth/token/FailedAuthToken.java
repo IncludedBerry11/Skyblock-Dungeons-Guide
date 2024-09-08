@@ -18,6 +18,7 @@
 
 package kr.syeyoung.dungeonsguide.launcher.auth.token;
 
+import org.json.JSONObject;
 import java.time.Instant;
 
 public class FailedAuthToken implements AuthToken {
@@ -27,7 +28,6 @@ public class FailedAuthToken implements AuthToken {
         this.exception = exception;
     }
 
-    private String token;
     private JSONObject parsed;
 
     @Override
