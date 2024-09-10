@@ -28,7 +28,9 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Compiled-files
-        path: build/libs/*
+        path: |
+              loader/build/libs/*.jar
+              mod/build/libs/*.jar
     - run: ls */*/*/*/*/*
     - run: ls */*/*/*/*
     - run: ls */*/*/*
