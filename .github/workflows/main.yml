@@ -29,8 +29,8 @@ jobs:
       with:
         name: Compiled-files
         path: |
-              loader/build/libs/*.jar
-              mod/build/libs/*.jar
+              loader/build/libs/*-mapped.jar
+              mod/build/libs/*-mapped.jar
     - run: ls */*/*/*/*/*
     - run: ls */*/*/*/*
     - run: ls */*/*/*
