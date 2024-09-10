@@ -87,6 +87,19 @@ public class AuthManager {
         }
 
         initlock = true;
+
+        scheduler.scheduleAtFixedRate(() -> {
+            boolean shouldReAuth = false;
+            if (shouldReAuth)
+                try {
+                    reAuth();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+        }, 10,10000, TimeUnit.MILLISECONDS);
+
+
+        reAuth();
     }
 
 
@@ -134,8 +147,8 @@ public class AuthManager {
         accepting = true;
         scheduler.schedule(() -> {try {
             acceptPrivacyPolicy0(version);
-        } catch (Exception e) {reauthLock = false;} finally {
-            reauthLock = false;
+        } catch (Exception e) {e.printStackTrace();} finally {
+            accepting = false;
         }}, 0, TimeUnit.MILLISECONDS);
     }
 
